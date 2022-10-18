@@ -17,10 +17,10 @@ public class Problem19538 {
 		List<Integer> leastValArray = new ArrayList<>();
 		
 		for (int idx = 0; idx < lineNum; idx++) {
-			String val = br.readLine();
+			String val = br.readLine().replaceAll("0", "").trim();
 			datasArray.add(val);
 			int tmp = val.replaceAll("0", "").trim().split(" ").length;
-			tmp = (tmp / 2 > 0) ? tmp / 2 + tmp % 2 : 0;
+			tmp = (tmp > 0) ? tmp / 2 + tmp % 2 : 0;
 			leastValArray.add(tmp);
 		}
 
@@ -39,12 +39,13 @@ public class Problem19538 {
 
 				if (idx == 0) {
 					targetIdx.add(tmp - 1);
-					sb.append(datasArray.get(tmp - 1).replaceAll("0", "").trim());
+					sb.append(datasArray.get(tmp - 1));
+					sb.append(" ");
 				} else {
 					if (result[tmp - 1] == 0) {
 						int judgeCnt = 0;
 							
-						for (String tmpStr : datasArray.get(tmp - 1).replaceAll("0", "").trim().split(" ")) {
+						for (String tmpStr : datasArray.get(tmp - 1).split(" ")) {
 							if (result[Integer.parseInt(tmpStr) - 1] > 0) {
 								judgeCnt++;
 							}
@@ -52,7 +53,8 @@ public class Problem19538 {
 						
 						if (judgeCnt >= leastValArray.get(tmp - 1)) {
 							targetIdx.add(tmp - 1);
-							sb.append(datasArray.get(tmp - 1).replaceAll("0", ""));
+							sb.append(datasArray.get(tmp - 1));
+							sb.append(" ");
 						}
 					}
 				}
@@ -67,7 +69,7 @@ public class Problem19538 {
 				idx = lineNum;
 			}
 			
-			st = new StringTokenizer(sb.toString());
+			st = new StringTokenizer(sb.toString().trim());
 			sb.setLength(0);
 		}
 		
