@@ -1,82 +1,66 @@
 package BaekJoon;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Problem19538 {
 	public void solution() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		int lineNum = Integer.parseInt(br.readLine());
-		int[] result = new int[lineNum];
-		List<String> datasArray = new ArrayList<>();
-		List<Integer> leastValArray = new ArrayList<>();
-		
-		for (int idx = 0; idx < lineNum; idx++) {
-			String val = br.readLine().replaceAll("0", "").trim();
-			datasArray.add(val);
-			int tmp = val.replaceAll("0", "").trim().split(" ").length;
-			tmp = (tmp > 0) ? tmp / 2 + tmp % 2 : 0;
-			leastValArray.add(tmp);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		int personCnt = Integer.parseInt(br.readLine());
+		String[] personRelated = new String[personCnt];
+
+		for (int i = 0; i < personCnt; i++) {
+			personRelated[i] = br.readLine();
 		}
 
-		String init = br.readLine();
-		init = br.readLine();
-		
-		br.close();
-		
-		StringTokenizer st = new StringTokenizer(init);
-		StringBuilder sb = new StringBuilder();
-		List<Integer> targetIdx = new ArrayList<>();
-		
-		for (int idx = 0; idx < lineNum; idx++) {
-			while(st.hasMoreTokens()) {
-				int tmp = Integer.parseInt(st.nextToken());
+		int knowPersonCnt = Integer.parseInt(br.readLine());
+		int[] initiator = new int[knowPersonCnt];
 
-				if (idx == 0) {
-					targetIdx.add(tmp - 1);
-					sb.append(datasArray.get(tmp - 1));
-					sb.append(" ");
-				} else {
-					if (result[tmp - 1] == 0) {
-						int judgeCnt = 0;
-							
-						for (String tmpStr : datasArray.get(tmp - 1).split(" ")) {
-							if (result[Integer.parseInt(tmpStr) - 1] > 0) {
-								judgeCnt++;
-							}
-						}
-						
-						if (judgeCnt >= leastValArray.get(tmp - 1)) {
-							targetIdx.add(tmp - 1);
-							sb.append(datasArray.get(tmp - 1));
-							sb.append(" ");
-						}
-					}
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < knowPersonCnt; i++) {
+			initiator[i] = Integer.parseInt(st.nextToken());
+		}
+
+		Integer[] result = new Integer[personCnt];
+		int[] turn = new int[personCnt];
+
+		Queue<Integer> q = new LinkedList<>();
+
+		for (int tmp : initiator) {
+			q.offer(tmp);
+			result[tmp - 1] = 0;
+		}
+
+		for (int i = 0; i < personCnt; i++) {
+			turn[i] = personRelated[i].split(" ").length / 2;
+		}
+
+		while(!q.isEmpty()) {
+			int tmp = q.poll();
+
+			for (String next : personRelated[tmp - 1].split(" ")) {
+				if (next.equals("0")) {
+					break;
+				}
+
+				int nextInt = Integer.parseInt(next);
+
+				turn[nextInt - 1] -= 1;
+				if (result[nextInt - 1] == null && turn[nextInt - 1] <= 0) {
+					q.offer(nextInt);
+					result[nextInt - 1] = result[tmp - 1] + 1;
 				}
 			}
-			
-			for (int target : targetIdx) {
-				result[target] = idx + 1;
-			}
-			targetIdx.clear();
-			
-			if (sb.length() == 0) {
-				idx = lineNum;
-			}
-			
-			st = new StringTokenizer(sb.toString().trim());
-			sb.setLength(0);
 		}
-		
-		for (int tmp : result) {
-			sb.append(tmp - 1).append(" ");
+
+		for (int i = 0; i < personCnt; i++) {
+			String str = result[i] == null ? "-1" : result[i].toString();
+			bw.write(str + " ");
 		}
-		
-		System.out.print(sb.toString());
+
+		br.close();
+		bw.close();
 	}
 }

@@ -1,122 +1,78 @@
 package BaekJoon;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.util.StringTokenizer;
 
 public class Problem17387 {
 	public void solution() throws IOException {
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		
-		Line line1 = new Line(bf.readLine());
-		Line line2 = new Line(bf.readLine());
-		
-		bf.close();
-		
-		if (line1.isCrossed(line2)) {
-			System.out.print("1");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		Point lineAEnd = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+		Point lineABegin = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+		Line lineA = new Line(lineABegin, lineAEnd);
+
+		st = new StringTokenizer(br.readLine());
+		Point lineBEnd = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+		Point lineBBegin = new Point(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
+		Line lineB = new Line(lineBBegin, lineBEnd);
+
+		if (lineA.isCrossed2(lineB)) {
+			bw.write("1");
 		} else {
-			System.out.print("0");
+			bw.write("0");
+		}
+
+		br.close();
+		bw.close();
+	}
+
+	class Point implements Comparable<Point> {
+		long x, y;
+
+		public Point(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		@Override
+		public int compareTo(Point o) {
+			if (this.x == o.x) {
+				return this.y - o.y > 0 ? 1 : this.y - o.y < 0 ? -1 : 0;
+			}
+			return this.x - o.x > 0 ? 1 : this.x - o.x < 0 ? -1 : 0;
 		}
 	}
-	
+
 	class Line {
-		private int x1;
-		private int y1;
-		private int x2;
-		private int y2;
-		
-		private int inclination;
-		private int constant;
-		
-		public Line() {
-			
+		Point p1, p2;
+
+		public Line(Point p1, Point p2) {
+			this.p1 = p1.compareTo(p2) <= 0 ? p1 : p2;
+			this.p2 = p1.compareTo(p2) <= 0 ? p2 : p1;
 		}
-		
-		public Line(String info) {
-			String[] points = info.split(" ");
-			
-			x1 = Integer.parseInt(points[0]);
-			y1 = Integer.parseInt(points[1]);
-			x2 = Integer.parseInt(points[2]);
-			y2 = Integer.parseInt(points[3]);
-			
-			inclination = (y2 - y1) / (x2 - x1);
-			constant = y1 - inclination * x1;
-		}
-		
-		public String getEquation() {
-			return inclination + "+" + constant;
-		}
-		
-		public boolean isIncludedX(double val) {
-			if (x1 > x2) {
-				if (val >= x2 && x1 >= val) {
-					return true;
-				} else {
-					return false;
-				}
-			} else if (x1 == x2) {
-				if (val == (int) val) {
-					if ((int) val == x1) {
-						return true;
-					} else {
-						return false;
-					}
-				} else {
-					return false;
-				}
-			} else {
-				if (val >= x1 && x2 >= val) {
-					return true;
-				} else {
-					return false;
-				}
+
+		private int ccw (Point a, Point b, Point c) {
+			long sum = 0;
+			Point[] arr = {a, b, c, a};
+
+			for (int i = 0; i < 3; i++) {
+				sum += arr[i].x * arr[i + 1].y - arr[i + 1].x * arr[i].y;
 			}
+
+			return sum > 0 ? 1 : sum < 0 ? -1 : 0;
 		}
-		
-		public boolean isIncludedX(int val) {
-			if (x1 > x2) {
-				if (val >= x2 && x1 >= val) {
-					return true;
-				} else {
-					return false;
-				}
-			} else if (x1 == x2) {
-				if (val == x1) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				if (val >= x1 && x2 >= val) {
-					return true;
-				} else {
-					return false;
-				}
+
+		public boolean isCrossed2(Line line2) {
+			int res1 = ccw(p1, p2, line2.p1) * ccw(p1, p2, line2.p2);
+			int res2 = ccw(line2.p1, line2.p2, p1) * ccw(line2.p1, line2.p2, p2);
+
+			if (res1 == 0 && res2 == 0) {
+				return p1.compareTo(line2.p2) <= 0 && line2.p1.compareTo(p2) <= 0;
 			}
-		}
-		
-		public boolean isCrossed(Line another) {
-			String[] anotherEquation = another.getEquation().split("[+]");
-			int anotherInclination = Integer.parseInt(anotherEquation[0]);
-			int anotherConstnat = Integer.parseInt(anotherEquation[1]);
-			
-			if (inclination == anotherInclination) {
-				if (constant == anotherConstnat && (another.isIncludedX(x1) || another.isIncludedX(x2))) {
-					return true;
-				} else {
-					return false;
-				}
-			} else {
-				double crossX = (anotherConstnat - constant) / (inclination - anotherInclination);
-				
-				if (isIncludedX(crossX) && another.isIncludedX(crossX)) {
-					return true;
-				} else {
-					return false;
-				}
-			}
+
+			return res1 <= 0 && res2 <= 0;
 		}
 	}
 }
