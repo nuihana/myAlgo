@@ -1,4 +1,4 @@
-package BaekJoon.IO_ArithmeticOperation;
+package BaekJoon.Advanced_1;
 
 public class Problem25083 {
 	public void solution() {
