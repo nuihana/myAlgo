@@ -20,7 +20,7 @@ public class Problem17298 {
         Stack<Integer> stack = new Stack<>();
         int[] result = new int[arrSize];
         for (int i = arrSize - 1, j = 0; i >= 0; i--) {
-            while(!stack.empty() && stack.peek() < arr[i]) {
+            while(!stack.empty() && stack.peek() <= arr[i]) {
                 stack.pop();
             }
 
@@ -30,7 +30,7 @@ public class Problem17298 {
                 result[j] = stack.peek();
             }
 
-			stack.add(arr[i]);
+            stack.add(arr[i]);
             j++;
         }
 
