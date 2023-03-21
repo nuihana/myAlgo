@@ -1,4 +1,4 @@
-package BaekJoon.Solve2023.Random;
+package BaekJoon.Solve2023.GraphAndCircuit;
 
 import java.io.*;
 import java.util.*;
