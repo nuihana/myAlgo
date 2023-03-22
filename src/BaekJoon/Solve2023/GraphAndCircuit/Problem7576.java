@@ -29,22 +29,22 @@ public class Problem7576 {
             Point tmp = que.poll();
 
             if (tmp.y > 0 && box[tmp.x][tmp.y - 1] == 0) {
-                box[tmp.x][tmp.y - 1] = 1;
+                box[tmp.x][tmp.y - 1] = tmp.ord + 1;
                 que.add(new Point(tmp.x, tmp.y - 1, tmp.ord + 1));
             }
 
             if (tmp.x < width - 1 && box[tmp.x + 1][tmp.y] == 0) {
-                box[tmp.x + 1][tmp.y] = 1;
+                box[tmp.x + 1][tmp.y] = tmp.ord + 1;
                 que.add(new Point(tmp.x + 1, tmp.y, tmp.ord + 1));
             }
 
             if (tmp.y < height - 1 && box[tmp.x][tmp.y + 1] == 0) {
-                box[tmp.x][tmp.y + 1] = 1;
+                box[tmp.x][tmp.y + 1] = tmp.ord + 1;
                 que.add(new Point(tmp.x, tmp.y + 1, tmp.ord + 1));
             }
 
             if (tmp.x > 0 && box[tmp.x - 1][tmp.y] == 0) {
-                box[tmp.x - 1][tmp.y] = 1;
+                box[tmp.x - 1][tmp.y] = tmp.ord + 1;
                 que.add(new Point(tmp.x - 1, tmp.y, tmp.ord + 1));
             }
         }
