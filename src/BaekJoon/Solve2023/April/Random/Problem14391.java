@@ -54,8 +54,6 @@ public class Problem14391 {
 
         bw.write(String.valueOf(result));
 
-        getMaximumCase(fragList.get(0), 0);
-
         br.close();
         bw.close();
     }
