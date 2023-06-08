@@ -78,7 +78,7 @@ public class Problem11438 {
         if (a == b) return a;
 
         for (int i = bit - 1; i >= 0; i--) {
-            if (ancestorTable[a][i] != ancestorTable[b][i]) {
+            if (ancestorTable[i][a] != ancestorTable[i][b]) {
                 a = ancestorTable[i][a];
                 b = ancestorTable[i][b];
             }
