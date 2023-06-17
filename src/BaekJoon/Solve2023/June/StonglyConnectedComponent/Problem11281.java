@@ -108,7 +108,7 @@ public class Problem11281 {
     private String backtracking() {
         for (int i = groupnum; i > 0; i--) {
             for (int next : scc.get(i)) {
-                int now = index(next);
+                int now = Math.abs(index(next));
                 if (seq[now] == -1) {
                     if (next > nodeCnt) {
                         seq[now] = 1;
