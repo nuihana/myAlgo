@@ -1,4 +1,4 @@
-package BaekJoon.Solve2023.June.Random;
+package BaekJoon.Solve2023.June.Greedy;
 
 import java.io.*;
 import java.util.Arrays;
