@@ -2,7 +2,7 @@ package BaekJoon.Solve2023.August.Conte_Arena2nd;
 
 import java.io.*;
 
-public class ProblemB {
+public class Problem28702 {
     public void solution() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));

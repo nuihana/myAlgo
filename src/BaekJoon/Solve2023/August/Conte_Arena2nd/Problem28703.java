@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class ProblemC {
+public class Problem28703 {
     public void solution() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
