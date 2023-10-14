@@ -22,12 +22,13 @@ public class Problem2003 {
         int left = 0;
         int right = 1;
         int sum = arr[0];
-        while (right < numCnt) {
+        while (right <= numCnt) {
             if (sum == destination) {
                 res++;
                 sum -= arr[left];
                 left++;
             } else if (sum < destination) {
+                if (right == numCnt) break;
                 sum += arr[right];
                 right++;
             } else if (sum > destination) {
