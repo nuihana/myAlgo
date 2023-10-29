@@ -42,6 +42,11 @@ public class Problem3107 {
 
     private String lpad(String src) {
         if (src.length() >= 4) return src;
-        return "0".repeat(Math.max(0, 4 - src.length())) + src;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Math.max(0, 4 - src.length()); i++) {
+            sb.append("0");
+        }
+        sb.append(src);
+        return sb.toString();
     }
 }
