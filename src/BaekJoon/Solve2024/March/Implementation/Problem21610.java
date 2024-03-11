@@ -98,8 +98,18 @@ public class Problem21610 {
         }
 
         @Override
+        public int hashCode() {
+            final int prime = 31;
+            int hash = 1;
+            hash += prime * hash + x;
+            hash += prime * hash + y;
+            return hash;
+        }
+
+        @Override
         public boolean equals(Object obj) {
-            return super.equals(obj);
+            Point o = (Point) obj;
+            return this.x == o.x && this.y == o.y;
         }
     }
 }
