@@ -22,7 +22,7 @@ public class Problem2693 {
 
             Arrays.sort(arr);
 
-            sb.append(arr[2]).append("\n");
+            sb.append(arr[7]).append("\n");
         }
         System.out.print(sb);
 
