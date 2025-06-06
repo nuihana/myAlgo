@@ -1,4 +1,4 @@
-package BaekJoon.Solve2025.June;
+package BaekJoon.Solve2025.June.String;
 
 import java.io.BufferedReader;
 import java.io.IOException;
